@@ -45,6 +45,7 @@ export class UI{
         })
 
     }
+
     addEmployeeToUI(employee) {
         this.employeesList.innerHTML += 
         `   <tr>                             
@@ -77,5 +78,24 @@ export class UI{
         this.nameInput = ""
         this.departmentInput = ""
         this.salaryInput = ""
+    }
+
+    deleteUserEmployees(user){
+        const id = user.parentElement.previousElementSibling.previousElementSibling.textContent
+        console.log(id)
+        request.delete(id).then(message => {
+            this.deleteUserEmployeesToUI(user.parentElement.parentElement)
+            }).catch(err => {
+            console.log(err)
+            })  
+    }
+
+    deleteUserEmployeesToUI(element){
+        // element.style = "display: none"
+        element.remove()
+    }
+
+    updateUserEmployees(){
+
     }
 }

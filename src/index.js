@@ -18,6 +18,8 @@ EventListener();
 function EventListener(){
     document.addEventListener("DOMContentLoaded",getAllEmployees)
     form.addEventListener("submit", addEmployee)
+    employeesList.addEventListener("click", updateOrDelete)
+
 
 }
 
@@ -32,6 +34,16 @@ function addEmployee(e){
     e.preventDefault();
 }
 
+function updateOrDelete(e){
+    // console.log(e.target.id)
+    if(e.target.id === "delete-employee"){
+        ui.deleteUserEmployees(e.target)
+
+    }
+    else if(e.target.id === "update-employee"){
+        ui.updateUserEmployees(e.target.id)
+    }
+}
 
 
 /*

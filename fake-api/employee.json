@@ -1,12 +1,6 @@
 {
   "employees": [
     {
-      "name": "Suzan Bulbul",
-      "departmant": "Frontend Developer",
-      "salary": 4000,
-      "id": 1
-    },
-    {
       "name": "Burak Kuru",
       "departmant": "Backend Developer",
       "salary": 7000,
