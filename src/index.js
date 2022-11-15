@@ -1,4 +1,5 @@
-import { Request } from "./request";
+import { UI } from "./ui"
+
 
 // Element secme
 const form = document.getElementById("employee-form");
@@ -7,8 +8,31 @@ const departmentInput = document.getElementById("department");
 const salaryInput = document.getElementById("salary");
 const employeesList = document.getElementById("employees");
 const updateEmployeeButton = document.getElementById("update");
+const addUserEmployeeButton = document.getElementById("user-add");
 
-const request = new Request("http://localhost:3000/employees");
+
+const ui = new UI();
+
+EventListener();
+
+function EventListener(){
+    document.addEventListener("DOMContentLoaded",getAllEmployees)
+    form.addEventListener("submit", addEmployee)
+
+}
+
+function getAllEmployees(){
+    ui.addAllEmployeeToUI()
+
+}
+
+function addEmployee(e){
+    ui.addUserEmployeeToUI();
+
+    e.preventDefault();
+}
+
+
 
 /*
 request.get()
@@ -33,11 +57,12 @@ request.put(3, {name: "Mertcan", department: "Product Manager", salary: 8000})
     .catch(err => {
         console.log(err)
     })  
-     */
-    request.delete(3).then(message => {
-        console.log(message)
+
+request.delete(3).then(message => {
+    console.log(message)
     }).catch(err => {
-        console.log(err)
+    console.log(err)
     })
+*/
 
 
