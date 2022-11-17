@@ -1,14 +1,10 @@
-import { UI } from "./ui"
+import { UI } from './ui.js';
 
 
 // Element secme
 const form = document.getElementById("employee-form");
-const nameInput = document.getElementById("name");
-const departmentInput = document.getElementById("department");
-const salaryInput = document.getElementById("salary");
 const employeesList = document.getElementById("employees");
 const updateEmployeeButton = document.getElementById("update");
-const addUserEmployeeButton = document.getElementById("user-add");
 
 
 const ui = new UI();
@@ -19,7 +15,7 @@ function EventListener(){
     document.addEventListener("DOMContentLoaded",getAllEmployees)
     form.addEventListener("submit", addEmployee)
     employeesList.addEventListener("click", updateOrDelete)
-
+    updateEmployeeButton.addEventListener("click", employeeUpdate)
 
 }
 
@@ -41,40 +37,22 @@ function updateOrDelete(e){
 
     }
     else if(e.target.id === "update-employee"){
-        ui.updateUserEmployees(e.target.id)
+        if(updateEmployeeButton.style.display === "none"){
+            updateEmployeeButton.style.display = "block"
+            ui.employeeInfoToInputs(e.target.parentElement.parentElement)
+        }
+        else{
+            updateEmployeeButton.style.display = "none"
+            ui.clearInputs()
+        }
     }
 }
 
+function employeeUpdate(){
+    ui.employeeUpdate()
+    // ui.clearInputs()
+}
 
-/*
-request.get()
-    .then(employees => {
-        console.log(employees)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-request.post({name: "Mertcan", department: "Product Manager", salary: 8000})
-    .then(employees => {
-        console.log(employees)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-   
-request.put(3, {name: "Mertcan", department: "Product Manager", salary: 8000})  
-    .then(employees => {
-        console.log(employees)
-    })
-    .catch(err => {
-        console.log(err)
-    })  
 
-request.delete(3).then(message => {
-    console.log(message)
-    }).catch(err => {
-    console.log(err)
-    })
-*/
 
 

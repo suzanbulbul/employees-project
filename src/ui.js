@@ -1,6 +1,8 @@
 import { Request } from "./request"
 
+
 const request = new Request("http://localhost:3000/employees");
+let updateState= null;
 
 
 export class UI{
@@ -12,7 +14,7 @@ export class UI{
         this.salaryInput = document.getElementById("salary");
     }
 
-    addAllEmployeeToUI(employees) {
+    addAllEmployeeToUI() {
         request.get()
         .then(employees => {
             let result = ""
@@ -75,14 +77,13 @@ export class UI{
     }
 
     clearInputs(){
-        this.nameInput = ""
-        this.departmentInput = ""
-        this.salaryInput = ""
+        this.nameInput.value = ""
+        this.departmentInput.value = ""
+        this.salaryInput.value = ""
     }
 
     deleteUserEmployees(user){
         const id = user.parentElement.previousElementSibling.previousElementSibling.textContent
-        console.log(id)
         request.delete(id).then(message => {
             this.deleteUserEmployeesToUI(user.parentElement.parentElement)
             }).catch(err => {
@@ -95,7 +96,46 @@ export class UI{
         element.remove()
     }
 
-    updateUserEmployees(){
+    employeeInfoToInputs(element){
+        const children = element.children
+        this.nameInput.value = children[0].textContent
+        this.departmentInput.value = children[1].textContent
+        this.salaryInput.value = children[2].textContent
+
+        if( updateState === null){
+            updateState = {
+                updateStateID: children[3].textContent,
+                updateParent: element
+            }
+        }
+        else{
+            updateState = null;
+        }
+    }
+
+    employeeUpdate(){
+        request.put(updateState.updateStateID, {name: this.nameInput.value.trim(), departmant: this.departmentInput.value.trim(), salary: Number(this.salaryInput.value)})  
+            .then(employees => {
+                this.updateEmloyeeOnIU(employees)
+                
+            })
+            .catch(err => {
+                console.log(err)
+            })  
+    }
+
+    updateEmloyeeOnIU(element){
+        updateState.updateParent.innerHTML = 
+        `   <tr>                             
+                <td>${element.name}</td>
+                <td>${element.departmant}</td>
+                <td>${element.salary}</td>
+                <td>${element.id}</td>
+                <td><a href="#" id = "update-employee" class= "btn btn-danger">Güncelle</a></td> 
+                <td> <a href="#" id = "delete-employee" class= "btn btn-danger">Sil</a></td>
+            </tr> `
+
+        this.clearInputs()    
 
     }
 }
